@@ -91,7 +91,7 @@ const toggleStatus = () => {
 
 const getTodos = async (status) => {
   statusSearch.value = status
-  await axios.get(`http://localhost:5001/ToDoList?status=${status}`)
+  await axios.get(`https://to-do-app-backend-seven.vercel.app/ToDoList?status=${status}`)
   .then( (res) => {
     toDoList.value = res.data.data;
   }).catch( (err) => {
@@ -101,7 +101,7 @@ const getTodos = async (status) => {
 
 const createTodo = async () => {
   if( toDo.value != '' && toDo.value != undefined ) {
-    await axios.post('http://localhost:5001/ToDoList',{
+    await axios.post('https://to-do-app-backend-seven.vercel.app/ToDoList',{
       description: toDo.value,
       status:status.value?"Completed":"Active"
     })
@@ -115,7 +115,7 @@ const createTodo = async () => {
 }
 
 const deleteTodoByStatus = async (status) => {
-  await axios.delete(`http://localhost:5001/ToDoListByStatus/${status}`)
+  await axios.delete(`https://to-do-app-backend-seven.vercel.app/ToDoListByStatus/${status}`)
   .then( async (res) => {
     console.log(res)
     await getTodos(statusSearch.value)
@@ -126,7 +126,7 @@ const deleteTodoByStatus = async (status) => {
 
 
 const deleteTodo = async (id) => {
-  await axios.delete(`http://localhost:5001/ToDoList/${id}`)
+  await axios.delete(`https://to-do-app-backend-seven.vercel.app/ToDoList/${id}`)
   .then( async (res) => {
     console.log(res)
     await getTodos(statusSearch.value)
@@ -137,7 +137,7 @@ const deleteTodo = async (id) => {
 
 const updateStatus = async (item) => {
   item.status == 'Active' ? item.status = 'Completed' : item.status = 'Active'
-  await axios.put(`http://localhost:5001/ToDoList/${item.id}`, {
+  await axios.put(`https://to-do-app-backend-seven.vercel.app/ToDoList/${item.id}`, {
     ...item
   })
   .then( async (res) => {
