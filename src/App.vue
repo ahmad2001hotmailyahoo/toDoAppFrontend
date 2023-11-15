@@ -91,7 +91,7 @@ const toggleStatus = () => {
 
 const getTodos = async (status) => {
   statusSearch.value = status
-  await axios.get(`http://localhost:5001/ToDoList?status=${status}`)
+  await axios.get(`https://to-do-app-backend-seven.vercel.app/ToDoList?status=${status}`)
   .then( (res) => {
     toDoList.value = res.data.data;
   }).catch( (err) => {
@@ -101,7 +101,7 @@ const getTodos = async (status) => {
 
 const createTodo = async () => {
   if( toDo.value != '' && toDo.value != undefined ) {
-    await axios.post('http://localhost:5001/ToDoList',{
+    await axios.post('https://to-do-app-backend-seven.vercel.app/ToDoList',{
       description: toDo.value,
       status:status.value?"Completed":"Active"
     })
@@ -115,7 +115,7 @@ const createTodo = async () => {
 }
 
 const deleteTodoByStatus = async (status) => {
-  await axios.delete(`http://localhost:5001/ToDoListByStatus/${status}`)
+  await axios.delete(`https://to-do-app-backend-seven.vercel.app/ToDoListByStatus/${status}`)
   .then( async (res) => {
     console.log(res)
     await getTodos(statusSearch.value)
@@ -126,7 +126,7 @@ const deleteTodoByStatus = async (status) => {
 
 
 const deleteTodo = async (id) => {
-  await axios.delete(`http://localhost:5001/ToDoList/${id}`)
+  await axios.delete(`https://to-do-app-backend-seven.vercel.app/ToDoList/${id}`)
   .then( async (res) => {
     console.log(res)
     await getTodos(statusSearch.value)
@@ -137,7 +137,7 @@ const deleteTodo = async (id) => {
 
 const updateStatus = async (item) => {
   item.status == 'Active' ? item.status = 'Completed' : item.status = 'Active'
-  await axios.put(`http://localhost:5001/ToDoList/${item.id}`, {
+  await axios.put(`https://to-do-app-backend-seven.vercel.app/ToDoList/${item.id}`, {
     ...item
   })
   .then( async (res) => {
@@ -156,168 +156,5 @@ onBeforeMount(async ()=>{
 
 </script>
 
-<style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Bellefair&family=Josefin+Sans&family=Manrope:wght@800&family=Outfit:wght@300;400;600&family=Rubik:wght@300;400;500&display=swap');
-
-$Bright_Blue: hsl(220, 98%, 61%);
-$Very_Light_Gray: hsl(0, 0%, 98%);
-$Very_Light_Grayish_Blue: hsl(236, 33%, 92%);
-$Light_Grayish_Blue: hsl(233, 11%, 84%);
-$Dark_Grayish_Blue: hsl(236, 9%, 61%);
-$Very_Dark_Grayish_Blue: hsl(235, 19%, 35%);
-
-$Very_Dark_Blue: hsl(235, 21%, 11%); 
-$Very_Dark_Desaturated_Blue: hsl(235, 24%, 19%);
-$Light_Grayish_Blue: hsl(234, 39%, 85%);
-$Light_Grayish_Blue : hsl(236, 33%, 92%);
-$Dark_Grayish_Blue: hsl(234, 11%, 52%);
-$Very_Dark_Grayish_Blue: hsl(233, 14%, 35%);
-$Very_Dark_Grayish_Blue: hsl(237, 14%, 26%);
-
-.bg-color{
-  background-color: $Bright_Blue;
-}
-
-.blue-color-text{
-  color: $Bright_Blue
-}
-.main {
-  height: 100%;
-  width: 100%;
-  font-family: 'Josefin Sans', sans-serif;
-}
-
-.darkMode{
-  background: url('./assets/images/bg-desktop-dark.jpg');
-  background-color: $Very_Dark_Blue;
-  background-repeat: no-repeat;
-  background-size: 100% 300px;
-}
-.lightMode{
-  background: url('./assets/images/bg-desktop-light.jpg');  
-  background-color: $Light_Grayish_Blue;
-  background-repeat: no-repeat;
-  background-size: 100% 300px;
-}
-
-.article {
-  width: 40%;
-  margin: auto;
-  padding-top: 1px;
-
-  @media only screen and (max-width: 700px) {
-    width: 90%;
-  }
-}
-
-.header {
-  color: $Very_Light_Grayish_Blue;
-  font-size: 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: auto;
-  margin-top: 99px;
-
-}
-
-.app-input {
-  margin-top: 5px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  padding: 5px 0;
-  width:100%;
-  
-}
-
-.app-input-field {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 24px;
-  border: none;
-  outline: none;
-  display: block;
-  padding: 10px 10px;
-  margin-top: 6px;
-  margin-left: 4px;
-  outline-color: transparent;
-  width: 70%;
-}
-
-.circle {
-  margin-left: 4px;
-  min-width: 20px;
-  min-height: 20px;
-  border-radius: 20px;
-  border: 1px solid $Light_Grayish_Blue;
-  text-align: center;
-}
-
-.todoListCard {
-  max-height: 300px;
-  margin-top: 20px;
-  background: white;
-  overflow: auto;
-
-  .footerCard {
-    color: $Dark_Grayish_Blue;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    padding-left: 14px;
-    min-height: 30px;
-  }
-}
-
-.todoListItem{
-  border-bottom: 0.1px solid $Very_Dark_Grayish_Blue;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  min-height: 30px;
-  
-  .title{
-    padding-top: 5px;
-    padding-left: 5px;
-    overflow: auto;
-    margin-right: 2px;
-  }
-
-  .delete{
-    padding-top: 5px;
-    margin-left: auto;
-    cursor: pointer;
-  }
-}
-
-.filter{
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  min-height: 25px;
-  background-color: white;
-
-  .filterOptions{
-    width: 60%;
-    display: flex;
-    justify-content: space-evenly;
-    color: $Dark_Grayish_Blue;
-  }
-}
-
-.todoListCard-darkMode {
-  background: $Very_Dark_Desaturated_Blue;
-  color: white;
-}
-
-.m-16 {
-  margin-left: 16px;
-}
-
-.pointer{
-    cursor: pointer;
-}
+<style lang="scss" src="./assets/style/main.scss" scoped>
 </style>
